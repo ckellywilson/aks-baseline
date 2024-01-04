@@ -23,5 +23,24 @@ echo '--------------- Get the AKS cluster spoke Virtual Network resource ID Comp
 echo '------------------------------------------------------------------------------'
 
 echo '--------------- Deploy the container registry and non-stamp resources template ---------------'
+echo 'Set AKS_RG_LOCATION='eastus2''
+export AKS_RG_LOCATION='eastus2'
+# [This takes about four minutes.]
+az deployment group create -g $AKS_RG_NAME -f ../acr-stamp.bicep -p targetVnetResourceId=${RESOURCEID_VNET_CLUSTERSPOKE_AKS_BASELINE} location=$AKS_RG_LOCATION
+echo '--------------- Deploy the container registry and non-stamp resources template Completed ---------------'
+echo '------------------------------------------------------------------------------'
+
+echo '--------------- Import cluster management images to your container registry ---------------'
+# Get your ACR instance name
+export ACR_NAME_AKS_BASELINE=$(az deployment group show -g $AKS_RG_NAME -n acr-stamp --query properties.outputs.containerRegistryName.value -o tsv)
+echo ACR_NAME_AKS_BASELINE: $ACR_NAME_AKS_BASELINE
+echo 'Import core image(s) hosted in public container registries to be used during bootstrapping'
+az acr import --source ghcr.io/kubereboot/kured:1.14.0 -n $ACR_NAME_AKS_BASELINE -g $AKS_RG_NAME --force
+echo '--------------- Import cluster management images to your container registry Completed ---------------'
+echo '------------------------------------------------------------------------------'
+
+echo '--------------- Update bootstrapping manifests to pull from your Azure Container Registry ---------------'
+echo 'Replace the ghcr.io/kubereboot/kured:1.14.0 image with $ACR_NAME_AKS_BASELINE.azurecr.io/kured:1.14.0'
+sed -i "s:ghcr.io:${ACR_NAME_AKS_BASELINE}.azurecr.io:" k8s/kured-template.yaml > k8s/kured.yaml
 
 

@@ -89,6 +89,9 @@ In addition to Azure Container Registry being deployed to support bootstrapping,
    git push
    ```
 
+### Connect to ACR Behind Private Network
+[Connect privately to an Azure container registry using Azure Private Link](https://learn.microsoft.com/en-us/azure/container-registry/container-registry-private-link)
+
 ### Save your work in-progress
 
 ```bash

@@ -25,7 +25,7 @@ done
 echo "Deleting users"
 for user in $(az ad user list --query "[?starts_with(displayName, 'cluster-')].displayName" -o tsv); do
     echo "Deleting user '$user'"
-    az ad user delete --upn-or-object-id $user
+    az ad user delete --id $user
     echo "Deleted user '$user'"
 done
 

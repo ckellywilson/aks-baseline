@@ -13,7 +13,7 @@ roleRef:
  name: admin
 subjects:
  - kind: Group
-   name: 258d1d47-d361-4828-8f01-5cbf918476e1
+   name: dad5f2b0-ef25-4f45-9bb8-f8ed83883465
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -26,7 +26,7 @@ roleRef:
  name: namespace-editer
 subjects:
  - kind: Group
-   name: 258d1d47-d361-4828-8f01-5cbf918476e1
+   name: dad5f2b0-ef25-4f45-9bb8-f8ed83883465
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -39,4 +39,4 @@ roleRef:
  name: view
 subjects:
  - kind: Group
-   name: 258d1d47-d361-4828-8f01-5cbf918476e1
+   name: dad5f2b0-ef25-4f45-9bb8-f8ed83883465
